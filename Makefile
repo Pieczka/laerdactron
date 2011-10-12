@@ -1,30 +1,19 @@
-PROJECT=laerdactron
+default: all
 
-default: article
+all: articlept articleen articleru
 
-article: $(PROJECT).pdf cleanout
+articlept:
+	cd article-pt && make
+	mv article-pt/article.pdf laerdactron-pt.pdf
 
-$(RPOJECT).pdf: bibliography
-	pdflatex $(PROJECT)
+articleen:
+	cd article-en && make
+	mv article-en/article.pdf laerdactron-en.pdf
 
-bibliography:
-	pdflatex $(PROJECT)
-	bibtex $(PROJECT)
+articleru:
+	cd article-ru && make
+	mv article-ru/article.pdf laerdactron-ru.pdf
 
-# Remove only auxiliary files
-cleanout:
-	rm *.aux
-	rm *.log
-	rm *.bbl
-	rm *.blg
-	rm *.dvi
-	rm *.log
-	rm *.toc
-	rm *.nav
-	rm *.snm
-	rm *.out
-	rm *.vrb
-
-# Remove generated PDF
-clean: cleanout
-	rm $(PROJECT).pdf
+clean:
+	cd article-pt && make clean
+	rm -f article*.pdf
